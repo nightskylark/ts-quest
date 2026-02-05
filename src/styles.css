@@ -427,6 +427,7 @@ body {
   border: 1px solid var(--line);
   background: var(--surface);
   text-align: left;
+  font-size: 16px;
   cursor: pointer;
   transition: border 0.2s ease, transform 0.2s ease;
 }
@@ -640,5 +641,22 @@ body {
 
   .match-row {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 12px 0 24px;
+  }
+
+  .lesson-card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .choice {
+    font-size: 18px;
+    padding: 14px 16px;
   }
 }
