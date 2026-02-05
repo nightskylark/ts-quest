@@ -649,6 +649,10 @@ body {
     padding: 12px 0 24px;
   }
 
+  .topbar {
+    padding: 0 16px;
+  }
+
   .lesson-card {
     border-radius: 0;
     border-left: none;
