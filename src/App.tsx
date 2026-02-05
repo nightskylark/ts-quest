@@ -3,7 +3,9 @@ import type { CSSProperties } from "react";
 import { courseData, isStepCorrect, type Level, type Step } from "./data/course";
 
 const STORAGE_KEY = "ts-quest-progress-v1";
+const THEME_KEY = "ts-quest-theme";
 const REVIEW_INTERVAL = 3;
+type Theme = "light" | "dark";
 
 type LevelProgress = {
   completed: boolean;
@@ -48,6 +50,18 @@ const saveProgress = (progress: ProgressState) => {
 const getLevelById = (levels: Level[], id: string | null) => {
   if (!id) return null;
   return levels.find((level) => level.id === id) ?? null;
+};
+
+const getInitialTheme = (): Theme => {
+  if (typeof window === "undefined") return "light";
+  try {
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === "light" || stored === "dark") return stored;
+  } catch {
+    // ignore storage errors
+  }
+  const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+  return prefersDark ? "dark" : "light";
 };
 
 const getTotalXp = (progress: ProgressState) =>
@@ -198,6 +212,7 @@ const renderCorrectAnswer = (step: Step) => {
 export default function App() {
   const [progress, setProgress] = useState<ProgressState>(loadProgress);
   const [activeLevelId, setActiveLevelId] = useState<string | null>(null);
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   const levels = useMemo(
     () => courseData.units.flatMap((unit) => unit.levels),
@@ -239,6 +254,18 @@ export default function App() {
   };
 
   const handleStart = (levelId: string) => setActiveLevelId(levelId);
+  const toggleTheme = () =>
+    setTheme((current) => (current === "light" ? "dark" : "light"));
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // ignore storage errors
+    }
+  }, [theme]);
 
   return (
     <div className="app">
@@ -250,16 +277,29 @@ export default function App() {
             <div className="subtitle">{courseData.meta.subtitle}</div>
           </div>
         </div>
-        <div className="stats">
-          <div className="stat-card">
-            <span>XP</span>
-            <strong>{totalXp}</strong>
-          </div>
-          <div className="stat-card">
-            <span>Уроки</span>
-            <strong>
-              {Object.values(progress).filter((item) => item.completed).length}
-            </strong>
+        <div className="topbar-actions">
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={toggleTheme}
+            aria-pressed={theme === "dark"}
+          >
+            <span className="theme-dot" />
+            <span className="theme-label">
+              {theme === "dark" ? "Темная тема" : "Светлая тема"}
+            </span>
+          </button>
+          <div className="stats">
+            <div className="stat-card">
+              <span>XP</span>
+              <strong>{totalXp}</strong>
+            </div>
+            <div className="stat-card">
+              <span>Уроки</span>
+              <strong>
+                {Object.values(progress).filter((item) => item.completed).length}
+              </strong>
+            </div>
           </div>
         </div>
       </header>

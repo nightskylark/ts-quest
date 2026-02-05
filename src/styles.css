@@ -7,12 +7,44 @@
   --ink: #1f2937;
   --muted: #6b7280;
   --card: #fffaf1;
+  --surface: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.7);
+  --surface-tint: rgba(255, 255, 255, 0.6);
   --line: #f1d9b2;
   --accent: #0ea5a4;
   --accent-2: #f97316;
   --accent-3: #2563eb;
   --shadow: 0 18px 45px rgba(31, 41, 55, 0.12);
   --radius: 18px;
+  --progress-track: #f2e6cc;
+  --bg-gradient:
+    radial-gradient(circle at 12% 20%, rgba(14, 165, 164, 0.18), transparent 45%),
+    radial-gradient(circle at 88% 10%, rgba(249, 115, 22, 0.2), transparent 42%),
+    radial-gradient(circle at 70% 80%, rgba(37, 99, 235, 0.16), transparent 45%),
+    linear-gradient(160deg, #fff7e5 0%, #fef1dc 48%, #ffe9c6 100%);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --bg-strong: #121a2f;
+  --ink: #e5e7eb;
+  --muted: #9aa4b2;
+  --card: #121c34;
+  --surface: #0f1a31;
+  --surface-soft: rgba(15, 26, 49, 0.7);
+  --surface-tint: rgba(15, 26, 49, 0.6);
+  --line: #24324f;
+  --accent: #22c1b9;
+  --accent-2: #fb923c;
+  --accent-3: #60a5fa;
+  --shadow: 0 18px 45px rgba(3, 7, 18, 0.55);
+  --progress-track: #1f2a44;
+  --bg-gradient:
+    radial-gradient(circle at 12% 20%, rgba(34, 193, 185, 0.22), transparent 45%),
+    radial-gradient(circle at 88% 10%, rgba(251, 146, 60, 0.18), transparent 42%),
+    radial-gradient(circle at 70% 80%, rgba(96, 165, 250, 0.18), transparent 45%),
+    linear-gradient(160deg, #0b1020 0%, #0f172a 52%, #111827 100%);
 }
 
 * {
@@ -24,11 +56,7 @@ body {
   min-height: 100vh;
   font-family: "Sora", system-ui, sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 12% 20%, rgba(14, 165, 164, 0.18), transparent 45%),
-    radial-gradient(circle at 88% 10%, rgba(249, 115, 22, 0.2), transparent 42%),
-    radial-gradient(circle at 70% 80%, rgba(37, 99, 235, 0.16), transparent 45%),
-    linear-gradient(160deg, #fff7e5 0%, #fef1dc 48%, #ffe9c6 100%);
+  background: var(--bg-gradient);
 }
 
 .app {
@@ -43,6 +71,44 @@ body {
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 32px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.theme-toggle {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #ffffff, var(--accent));
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08) inset;
+}
+
+.theme-label {
+  font-size: 12px;
+  letter-spacing: 0.02em;
 }
 
 .brand {
@@ -177,7 +243,7 @@ body {
 
 .unit-progress {
   text-align: right;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface-soft);
   border-radius: 16px;
   padding: 10px 14px;
   border: 1px solid var(--line);
@@ -204,7 +270,7 @@ body {
 }
 
 .level-card {
-  background: white;
+  background: var(--surface);
   border-radius: 16px;
   padding: 16px;
   border: 1px solid var(--line);
@@ -251,7 +317,7 @@ body {
 }
 
 .ghost {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--line);
   color: var(--ink);
 }
@@ -327,7 +393,7 @@ body {
 
 .progress-bar {
   height: 8px;
-  background: #f2e6cc;
+  background: var(--progress-track);
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 20px;
@@ -359,7 +425,7 @@ body {
   padding: 12px 14px;
   border-radius: 14px;
   border: 1px solid var(--line);
-  background: white;
+  background: var(--surface);
   text-align: left;
   cursor: pointer;
   transition: border 0.2s ease, transform 0.2s ease;
@@ -401,7 +467,7 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--surface-tint);
 }
 
 .order-target span {
@@ -413,7 +479,7 @@ body {
   padding: 6px 10px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: white;
+  background: var(--surface);
   font-family: "JetBrains Mono", monospace;
   font-size: 13px;
   cursor: pointer;
@@ -445,7 +511,7 @@ body {
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: white;
+  background: var(--surface);
 }
 
 .code-lines {
@@ -461,7 +527,7 @@ body {
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: white;
+  background: var(--surface);
   cursor: pointer;
 }
 
@@ -521,7 +587,7 @@ body {
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface-soft);
   display: grid;
   gap: 6px;
   font-weight: 500;
@@ -557,6 +623,12 @@ body {
 
 @media (max-width: 900px) {
   .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topbar-actions {
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
   }
