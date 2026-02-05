@@ -89,10 +89,12 @@ export const courseData = raw as CourseData;
 export const normalizeAnswer = (value: string) =>
   value
     .trim()
-    .replace(/\s+/g, " ")
     .replace(/^`(.+)`$/, "$1")
     .replace(/^"(.+)"$/, "$1")
-    .replace(/^'(.+)'$/, "$1");
+    .replace(/^'(.+)'$/, "$1")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([,;:\[\]\(\)\{\}<>])\s*/g, "$1")
+    .toLowerCase();
 
 export const isStepCorrect = (step: Step, answer: unknown): boolean => {
   if (!step) return false;
