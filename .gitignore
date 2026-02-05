@@ -11,6 +11,11 @@ yarn-error.log*
 
 # Vite
 .vite/
+vite.config.d.ts
+vite.config.js
+
+# TypeScript
+*.tsbuildinfo
 
 # Env
 .env
